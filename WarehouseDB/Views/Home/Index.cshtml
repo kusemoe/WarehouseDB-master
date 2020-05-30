@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+}
+
+
+
+<link href="~/Models/lib/layui/css/layui.css" rel="stylesheet" />
+<link href="~/Models/lib/layui/css/layui.mobile.css" rel="stylesheet" />
+<style>
+    .row {
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+<div class="layui-row">
+    <div class="layui-col-xs4 row">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='staff'>员工管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='Bill'>账单管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='product'>产品管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='Purchase'>进货管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='Shipping'>出货管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='client'>客户管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='admini'>管理员管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='supplier'>供应商管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='type'>类型管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='Order'>订单管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0)" n='department'>部门管理</a></li>
+        </ul>
+    </div>
+    <div class="layui-col-xs6 row">
+        <table id="demo" lay-filter="test"></table>
+    </div>
+</div>
+<script src="~/Models/lib/layui/layui.all.js" charset="utf-8" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script>
+    $(function () {
+        var showrow = {
+            department: [
+                { field: 'departmentId', title: '部门编号' },
+                { field: 'departmentName', title: '部门名称' }
+            ],
+            staff: [
+                { field: 'StaffId', title: '员工编号' },
+                { field: 'EntryTime', title: '入职时间' },
+                { field: 'StaffName', title: '员工姓名' },
+                { field: 'departmentType', title: '部门类型' },
+                { field: 'StaffSex', title: '性别' }
+            ],
+            admini: [
+                { field: 'adminiId', title: '编号' },
+                { field: 'adminiName', title: '用户名' },
+                { field: 'adminiPassword', title: '密码' }
+            ],
+            Order: [
+                { field: 'OrderId', title: '编号' },
+                { field: 'BarCode', title: '产品条码' },
+                { field: 'OrderTime', title: '订单时间' },
+                { field: 'address', title: '所在地' },
+                { field: 'Remarks', title: '备注' }
+            ]
+            , supplier: [
+                { field: 'supplierName', title: '供应商名称' },
+                { field: 'Address', title: '地址' },
+                { field: 'phone', title: '电话' },
+                { field: 'supplierId', title: '编号' },
+                { field: 'principal', title: '负责人' },
+                { field: 'Emli', title: '邮箱' }
+            ]
+            , Purchase: [
+                { field: 'PurchaseId', title: '进货编号' },
+                { field: 'ProductId', title: '产品编号' },
+                { field: 'supplierId', title: '供应商编号' },
+                { field: 'number', title: '数量' },
+                { field: 'status', title: '状态' },
+                { field: 'PurchaseTime', title: '进货时间' }
+            ]
+            , Shipping: [
+                { field: 'ShippingId', title: '出货编号' },
+                { field: 'ProductId', title: '产品编号' },
+                { field: 'supplierId', title: '供应商编号' },
+                { field: 'number', title: '数量' },
+                { field: 'status', title: '状态' },
+                { field: 'ShippingTime', title: '出货时间' }
+            ]
+            , type: [
+                { field: 'typeID', title: '类型编号' },
+                { field: 'typeName', title: '类型名称' }
+            ]
+            , client: [
+                { field: 'ClientId', title: '编号' },
+                { field: 'ClientName', title: '姓名' },
+                { field: 'Emli', title: '邮箱' },
+                { field: 'Phone', title: '电话' },
+                { field: 'Address', title: '地址' }
+            ], product:[
+                { field: 'ProductId', title: '产品编号' },
+                { field: 'Barcode', title: '产品条码' },
+                { field: 'ProductName', title: '产品名称' },
+                { field: 'money', title: '价格' },
+                { field: 'type', title: '类型' },
+                { field: 'Remarks', title: '备注' }
+            ], Bill:[
+                { field: 'BillId', title: '编号' },
+                { field: 'ProductId', title: '产品编号' },
+                { field: 'BillNum', title: '数量' },
+                { field: 'BillType', title: '类型' },
+                { field: 'BillTime', title: '时间' }
+            ]};
+        var Switch = 'product';
+        SelectTable(showrow[Switch]);
+        $('.layui-nav-tree a').click(function () {
+            Switch = $(this).attr('n');
+            SelectTable(showrow[Switch]);
+        });
+
+        function SelectTable(data) {
+            layui.use('table', function () {
+                var table = layui.table;
+                //展示已知数据
+                table.render({
+                    elem: '#demo'
+                    , url: `/Home/${Switch}`
+                    , cols: [data]
+                    , width: 600
+                    , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
+                    , limit: 5 //每页默认显示的数量
+                    , even: true
+                    , size: 'sm'
+                    , toolbar: true
+                });
+            });
+        }
+    })
+
+
+</script>
