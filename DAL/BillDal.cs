@@ -10,5 +10,9 @@ namespace DAL
 {
     public class BillDal : DBHelper<Bill>
     {
+        public void Remove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Model;
 namespace DAL
 {
-    public class ProductDal
+    public class ProductDal : DBHelper<product>
     {
         WarehouseDBEntities entities = new WarehouseDBEntities();
         public List<product> SelectProduct()

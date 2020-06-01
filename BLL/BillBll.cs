@@ -14,5 +14,9 @@ namespace BLL
         {
             return dal.SelectList().ToList();
         }
+        public int Remove(Bill t)
+        {
+            return dal.Remove(t);
+        }
     }
 }

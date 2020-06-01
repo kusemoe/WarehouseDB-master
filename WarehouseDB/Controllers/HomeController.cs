@@ -7,6 +7,8 @@ using Model;
 using BLL;
 using Microsoft.Ajax.Utilities;
 using System.Web.Services.Description;
+using System.Security.Cryptography;
+using System.Web.Query.Dynamic;
 
 namespace WarehouseDB.Controllers
 {
@@ -18,26 +20,22 @@ namespace WarehouseDB.Controllers
         }
         public ActionResult product(int page, int limit)
         {
-            ProductBll bll = new ProductBll();
-            var list = bll.SelectProduct();
-            for (int i = 0; i < 100; i++)
+            var bll = new ProductBll();
+            var list = bll.SelectProduct().Select(pro => new
             {
-                var pro = new product
-                {
-                    ProductId = i,
-                    Barcode = "4",
-                    ProductName = "3",
-                    money = 5,
-                    typeId = 6,
-                    Remarks = "2"
-                };
-                list.Add(pro);
-            }
+                pro.Barcode,
+                pro.Bill,
+                pro.money,
+                pro.ProductName,
+                pro.ProductId,
+                pro.Remarks,
+                pro.type.typeName
+            });
             var ListJson = new
             {
                 code = 0,
                 msg = "",
-                count = list.Count,
+                count = list.Count(),
                 data = list.Skip((page - 1) * limit).Take(limit).ToList()
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
@@ -173,8 +171,46 @@ namespace WarehouseDB.Controllers
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
 
-
-
+        public ActionResult Test(string t, int id)
+        {
+            switch (t)
+            {
+                case "type":
+                    new TypeBll().Remove(new type { typeID = id });
+                    break;
+                case "Bill":
+                    new BillBll().Remove(new Bill { BillId = id });
+                    break;
+                case "staff":
+                    new staffBll().Remove(new staff { StaffId = id });
+                    break;
+                case "Order":
+                    new OrderBll().Remove(new Order { OrderId = id });
+                    break;
+                case "client":
+                    new clientBll().Remove(new client { ClientId = id });
+                    break;
+                case "admini":
+                    new AdminiBll().Remove(new admini { adminiId = id });
+                    break;
+                case "product":
+                    new ProductBll().Remove(new product { ProductId = id });
+                    break;
+                case "supplier":
+                    new supplierBll().Remove(new supplier { supplierId = id });
+                    break;
+                case "Purchase":
+                    new PurchaseBll().Remove(new Purchase { PurchaseId = id });
+                    break;
+                case "Shipping":
+                    new ShippingBll().Remove(new Shipping { ShippingId = id });
+                    break;
+                case "department":
+                    new departmentBll().Remove(new department { departmentId = id });
+                    break;
+            }
+            return Content("1");
+        }
 
     }
 
