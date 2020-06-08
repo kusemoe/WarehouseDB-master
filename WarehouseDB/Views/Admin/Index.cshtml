@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Demo.cshtml";
+    Layout = null;
 }
+<link rel="stylesheet" href="~/Models/css/x-admin.css" media="all">
 <div class="x-box">
     <div class="x-top">
         <i class="layui-icon x-login-close">
@@ -21,13 +22,13 @@
             <img src="~/Models/images/logo.png" alt="">
         </div>
         <div class="input">
-            <form class="layui-form">
+            <form class="layui-form" action="/Admin/Login" method="post">
                 <div class="layui-form-item x-login-box">
                     <label for="username" class="layui-form-label">
                         <i class="layui-icon">&#xe612;</i>
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="adminiName" name="adminiName" required="" lay-verify="adminiName"
+                        <input type="text" id="username" name="adminiName" required="" lay-verify="username"
                                autocomplete="off" placeholder="username" class="layui-input">
                     </div>
                 </div>
@@ -36,12 +37,12 @@
                         <i class="layui-icon">&#xe628;</i>
                     </label>
                     <div class="layui-input-inline">
-                        <input type="password" id="adminiPassword" name="adminiPassword" required="" lay-verify="adminiPassword"
+                        <input type="password" id="pass" name="adminiPassword" required="" lay-verify="pass"
                                autocomplete="off" placeholder="******" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item" id="loginbtn">
-                    <button class="layui-btn" lay-filter="save" lay-submit="">
+                    <button class="layui-btn" lay-filter="save" lay-submit="" type="submit">
                         登 录
                     </button>
                 </div>
@@ -50,34 +51,11 @@
     </div>
 </div>
 <p style="color:#fff;text-align: center;">Copyright © 2017.Company name All rights X-admin </p>
-<script src="~/Models/lib/layui/layui.js" charset="utf-8"></script>
-<script src="~/Models/js/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Models/lib/layui/layui.all.js"></script>
 <script>
-    layui.use(['form'],
-        function () {
-            $ = layui.jquery;
-            var form = layui.form(),
-                layer = layui.layer;
-
-            $('.x-login-right li').click(function (event) {
-                color = $(this).attr('color');
-                $('body').css('background-color', color);
-            });
-
-            //监听提交
-            form.on('submit(save)',
-                function (data) {
-                    $.post(
-                        '/Admin/Login',
-                        { 'adminiName': data.field['adminiName'], 'adminiPassword': data.field['adminiPassword'] },
-                        function (success) {
-                            alert('1');
-                        }, 'json');
-
-                    console.log(data);
-                    return false;
-                });
-
-        });
-
+    $('.x-login-right li').click(function (event) {
+        color = $(this).attr('color');
+        $('body').css('background-color', color);
+    });
 </script>

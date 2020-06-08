@@ -19,5 +19,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(admini d)
+        {
+            return dal.Add(d);
+        }
     }
 }

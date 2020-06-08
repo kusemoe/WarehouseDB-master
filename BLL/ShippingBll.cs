@@ -16,5 +16,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(Shipping shipping)
+        {
+            return dal.Add(shipping);
+        }
     }
 }

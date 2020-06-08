@@ -15,5 +15,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(Purchase purchase)
+        {
+            return dal.Add(purchase);
+        }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="admini">
           <Key>
             <PropertyRef Name="adminiId" />
@@ -48,7 +48,7 @@
           <Property Name="BarCode" Type="char" MaxLength="13" Nullable="false" />
           <Property Name="OrderTime" Type="datetime" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Remarks" Type="text" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -57,9 +57,9 @@
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Barcode" Type="char" MaxLength="13" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="money" Type="money" Nullable="false" />
+          <Property Name="money" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="typeId" Type="int" Nullable="false" />
-          <Property Name="Remarks" Type="text" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -77,7 +77,7 @@
             <PropertyRef Name="ShippingId" />
           </Key>
           <Property Name="ShippingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="supplierId" Type="int" Nullable="false" />
+          <Property Name="clientId" Type="int" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
@@ -135,7 +135,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Purchase__Produc__34C8D9D1">
+        <Association Name="FK__Purchase__Produc__4AB81AF0">
           <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,7 +147,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Shipping__Produc__37A5467C">
+        <Association Name="FK__Purchase__suppli__49C3F6B7">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierId" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping__client__4D94879B">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="Shipping" Type="Self.Shipping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Shipping">
+              <PropertyRef Name="clientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping__Produc__4E88ABD4">
           <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="Shipping" Type="Self.Shipping" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,11 +215,19 @@
             <End Role="type" EntitySet="type" />
             <End Role="product" EntitySet="product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Purchase__Produc__34C8D9D1" Association="Self.FK__Purchase__Produc__34C8D9D1">
+          <AssociationSet Name="FK__Purchase__Produc__4AB81AF0" Association="Self.FK__Purchase__Produc__4AB81AF0">
             <End Role="product" EntitySet="product" />
             <End Role="Purchase" EntitySet="Purchase" />
           </AssociationSet>
-          <AssociationSet Name="FK__Shipping__Produc__37A5467C" Association="Self.FK__Shipping__Produc__37A5467C">
+          <AssociationSet Name="FK__Purchase__suppli__49C3F6B7" Association="Self.FK__Purchase__suppli__49C3F6B7">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping__client__4D94879B" Association="Self.FK__Shipping__client__4D94879B">
+            <End Role="client" EntitySet="client" />
+            <End Role="Shipping" EntitySet="Shipping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping__Produc__4E88ABD4" Association="Self.FK__Shipping__Produc__4E88ABD4">
             <End Role="product" EntitySet="product" />
             <End Role="Shipping" EntitySet="Shipping" />
           </AssociationSet>
@@ -204,8 +236,7 @@
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WarehouseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -237,6 +268,7 @@
           <Property Name="Emli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Shipping" Relationship="WarehouseDBModel.FK__Shipping__client__4D94879B" FromRole="client" ToRole="Shipping" />
         </EntityType>
         <EntityType Name="department">
           <Key>
@@ -269,7 +301,7 @@
           <NavigationProperty Name="Bill" Relationship="Self.FK__Bill__ProductId__31EC6D26" FromRole="product" ToRole="Bill" />
           <NavigationProperty Name="type" Relationship="Self.FK__product__typeId__2D27B809" FromRole="product" ToRole="type" />
           <NavigationProperty Name="Purchase" Relationship="Self.FK__Purchase__Produc__34C8D9D1" FromRole="product" ToRole="Purchase" />
-          <NavigationProperty Name="Shipping" Relationship="Self.FK__Shipping__Produc__37A5467C" FromRole="product" ToRole="Shipping" />
+          <NavigationProperty Name="Shipping" Relationship="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4" FromRole="product" ToRole="Shipping" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -282,18 +314,7 @@
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="PurchaseTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="product" Relationship="Self.FK__Purchase__Produc__34C8D9D1" FromRole="Purchase" ToRole="product" />
-        </EntityType>
-        <EntityType Name="Shipping">
-          <Key>
-            <PropertyRef Name="ShippingId" />
-          </Key>
-          <Property Name="ShippingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="supplierId" Type="Int32" Nullable="false" />
-          <Property Name="number" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ShippingTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="product" Relationship="Self.FK__Shipping__Produc__37A5467C" FromRole="Shipping" ToRole="product" />
+          <NavigationProperty Name="supplier" Relationship="WarehouseDBModel.FK__Purchase__suppli__49C3F6B7" FromRole="Purchase" ToRole="supplier" />
         </EntityType>
         <EntityType Name="staff">
           <Key>
@@ -316,6 +337,7 @@
           <Property Name="Emli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Purchase" Relationship="WarehouseDBModel.FK__Purchase__suppli__49C3F6B7" FromRole="supplier" ToRole="Purchase" />
         </EntityType>
         <EntityType Name="type">
           <Key>
@@ -373,18 +395,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Shipping__Produc__37A5467C">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="Shipping" Type="Self.Shipping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="Shipping">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="WarehouseDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="admini" EntityType="Self.admini" />
           <EntitySet Name="Bill" EntityType="Self.Bill" />
@@ -393,7 +403,6 @@
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="product" EntityType="Self.product" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" />
-          <EntitySet Name="Shipping" EntityType="Self.Shipping" />
           <EntitySet Name="staff" EntityType="Self.staff" />
           <EntitySet Name="supplier" EntityType="Self.supplier" />
           <EntitySet Name="type" EntityType="Self.type" />
@@ -413,11 +422,69 @@
             <End Role="product" EntitySet="product" />
             <End Role="Purchase" EntitySet="Purchase" />
           </AssociationSet>
-          <AssociationSet Name="FK__Shipping__Produc__37A5467C" Association="Self.FK__Shipping__Produc__37A5467C">
+          <AssociationSet Name="FK__Purchase__suppli__49C3F6B7" Association="WarehouseDBModel.FK__Purchase__suppli__49C3F6B7">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <EntitySet Name="Shipping" EntityType="WarehouseDBModel.Shipping" />
+          <AssociationSet Name="FK__Shipping__client__4D94879B" Association="WarehouseDBModel.FK__Shipping__client__4D94879B">
+            <End Role="client" EntitySet="client" />
+            <End Role="Shipping" EntitySet="Shipping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping__Produc__4E88ABD4" Association="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4">
             <End Role="product" EntitySet="product" />
             <End Role="Shipping" EntitySet="Shipping" />
           </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Purchase__suppli__49C3F6B7">
+          <End Type="WarehouseDBModel.supplier" Role="supplier" Multiplicity="1" />
+          <End Type="WarehouseDBModel.Purchase" Role="Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierId" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="ShippingId" />
+          </Key>
+          <Property Name="ShippingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clientId" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ShippingTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="client" Relationship="WarehouseDBModel.FK__Shipping__client__4D94879B" FromRole="Shipping" ToRole="client" />
+          <NavigationProperty Name="product" Relationship="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4" FromRole="Shipping" ToRole="product" />
+        </EntityType>
+        <Association Name="FK__Shipping__client__4D94879B">
+          <End Type="WarehouseDBModel.client" Role="client" Multiplicity="1" />
+          <End Type="WarehouseDBModel.Shipping" Role="Shipping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Shipping">
+              <PropertyRef Name="clientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping__Produc__4E88ABD4">
+          <End Type="WarehouseDBModel.product" Role="product" Multiplicity="1" />
+          <End Type="WarehouseDBModel.Shipping" Role="Shipping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Shipping">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -498,18 +565,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Shipping">
-            <EntityTypeMapping TypeName="WarehouseDBModel.Shipping">
-              <MappingFragment StoreEntitySet="Shipping">
-                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
-                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
-                <ScalarProperty Name="number" ColumnName="number" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="staff">
             <EntityTypeMapping TypeName="WarehouseDBModel.staff">
               <MappingFragment StoreEntitySet="staff">
@@ -538,6 +593,18 @@
               <MappingFragment StoreEntitySet="type">
                 <ScalarProperty Name="typeID" ColumnName="typeID" />
                 <ScalarProperty Name="typeName" ColumnName="typeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping">
+            <EntityTypeMapping TypeName="WarehouseDBModel.Shipping">
+              <MappingFragment StoreEntitySet="Shipping">
+                <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="clientId" ColumnName="clientId" />
+                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

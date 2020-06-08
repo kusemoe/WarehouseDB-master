@@ -12,5 +12,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(staff staff)
+        {
+            return dal.Add(staff);
+        }
     }
 }

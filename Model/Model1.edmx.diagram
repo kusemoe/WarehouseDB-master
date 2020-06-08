@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3cf7c029c987463cbaab8aeb6a54c062" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="WarehouseDBModel.admini" Width="1.5" PointX="8.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Bill" Width="1.5" PointX="1.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.client" Width="1.5" PointX="5.125" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.department" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Order" Width="1.5" PointX="7.125" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.product" Width="1.5" PointX="3.125" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Purchase" Width="1.5" PointX="4.5" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Shipping" Width="1.5" PointX="2.875" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.staff" Width="1.5" PointX="7.125" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.supplier" Width="1.5" PointX="10.375" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.type" Width="1.5" PointX="3.125" PointY="1.625" IsExpanded="true" />
+      <Diagram DiagramId="3cf7c029c987463cbaab8aeb6a54c062" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="WarehouseDBModel.admini" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Bill" Width="1.5" PointX="1" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.client" Width="1.5" PointX="4.875" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Order" Width="1.5" PointX="9.875" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.product" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Purchase" Width="1.5" PointX="4.875" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.staff" Width="1.5" PointX="7" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.supplier" Width="1.5" PointX="6.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.type" Width="1.5" PointX="1.375" PointY="3.875" IsExpanded="true" />
         <AssociationConnector Association="WarehouseDBModel.FK__Bill__ProductId__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="WarehouseDBModel.FK__staff__departmen__267ABA7A" ManuallyRouted="false" />
         <AssociationConnector Association="WarehouseDBModel.FK__product__typeId__2D27B809" ManuallyRouted="false" />
         <AssociationConnector Association="WarehouseDBModel.FK__Purchase__Produc__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__Produc__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Purchase__suppli__49C3F6B7" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Shipping" Width="1.5" PointX="3.125" PointY="7" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__client__4D94879B" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

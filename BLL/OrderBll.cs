@@ -15,5 +15,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(Order order)
+        {
+            return dal.Add(order);
+        }
     }
 }

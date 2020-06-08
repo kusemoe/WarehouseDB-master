@@ -19,12 +19,17 @@ namespace WarehouseDB.Controllers
         }
         public ActionResult Login(admini ad)
         {
+
             AdminiBll admini = new AdminiBll();
             var Flag = admini.AdminiLogin(ad);
             if (Flag == null)
-                return JavaScript("");
+                return RedirectToAction("Index");
             else
-                return JavaScript("");
+            {
+                HttpContext.Session[ad.adminiName] =1;
+                HttpContext.Session[ad.adminiPassword] =2;
+                return RedirectToRoute(new { controller = "Home", action = "About" });
+            }
         }
     }
 }

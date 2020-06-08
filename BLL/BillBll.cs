@@ -18,5 +18,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(Bill bill)
+        {
+            return dal.Add(bill);
+        }
     }
 }

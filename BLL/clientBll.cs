@@ -18,5 +18,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(client client)
+        {
+            return dal.Add(client);
+        }
     }
 }

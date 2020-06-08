@@ -18,5 +18,9 @@ namespace BLL
         {
             return dal.Remove(t);
         }
+        public int Add(Model.type type)
+        {
+            return dal.Add(type);
+        }
     }
 }
