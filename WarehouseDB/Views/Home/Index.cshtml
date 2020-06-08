@@ -1,192 +1,362 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Index";
     Layout = null;
 }
-
-
-
-<link href="~/Models/lib/layui/css/layui.css" rel="stylesheet" />
-<link href="~/Models/lib/layui/css/layui.mobile.css" rel="stylesheet" />
-<style>
-    .row {
-        display: inline-block;
-        vertical-align: top;
-    }
-</style>
-
-<div class="layui-row">
-    <div class="layui-col-xs2 row">
-        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Staff'>员工管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Bill'>账单管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Product'>产品管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Purchase'>进货管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Shipping'>出货管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Client'>客户管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Admini'>管理员管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Supplier'>供应商管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Type'>类型管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Order'>订单管理</a></li>
-            <li class="layui-nav-item"><a href="javascript:void(0)" n='Department'>部门管理</a></li>
-        </ul>
-    </div>
-    <div class="layui-col-xs10 row">
-        <table id="demo" lay-filter="test"></table>
-    </div>
-</div>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs detail" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-event="del">删除</a>
-</script>
-<script src="~/Models/lib/layui/layui.all.js" charset="utf-8" type="text/javascript"></script>
-<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
-<script>
-    var Switch = 'Product';
-    $(function () {
-        var showrow = {
-            Department: [
-                { field: 'departmentId', title: '部门编号' },
-                { field: 'departmentName', title: '部门名称' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Staff: [
-                { field: 'StaffId', title: '员工编号' },
-                { field: 'EntryTime', title: '入职时间' },
-                { field: 'StaffName', title: '员工姓名' },
-                { field: 'departmentName', title: '部门名称' },
-                { field: 'StaffSex', title: '性别' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Admini: [
-                { field: 'adminiId', title: '编号' },
-                { field: 'adminiName', title: '用户名' },
-                { field: 'adminiPassword', title: '密码' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Order: [
-                { field: 'OrderId', title: '编号' },
-                { field: 'BarCode', title: '产品条码' },
-                { field: 'OrderTime', title: '订单时间' },
-                { field: 'address', title: '所在地' },
-                { field: 'Remarks', title: '备注' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Supplier: [
-                { field: 'supplierId', title: '编号' },
-                { field: 'principal', title: '负责人' },
-                { field: 'supplierName', title: '供应商名称' },
-                { field: 'Address', title: '地址' },
-                { field: 'phone', title: '电话' },
-                { field: 'Emli', title: '邮箱' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Purchase: [
-                { field: 'PurchaseId', title: '进货编号' },
-                { field: 'ProductId', title: '产品编号' },
-                { field: 'supplierId', title: '供应商编号' },
-                { field: 'number', title: '数量' },
-                { field: 'status', title: '状态' },
-                { field: 'PurchaseTime', title: '进货时间' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Shipping: [
-                { field: 'ShippingId', title: '出货编号' },
-                { field: 'ProductName', title: '产品名称' },
-                { field: 'ClientName', title: '客户名称' },
-                { field: 'number', title: '数量' },
-                { field: 'status', title: '状态' },
-                { field: 'ShippingTime', title: '出货时间' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Type: [
-                { field: 'typeID', title: '类型编号' },
-                { field: 'typeName', title: '类型名称' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Client: [
-                { field: 'ClientId', title: '编号' },
-                { field: 'ClientName', title: '姓名' },
-                { field: 'Emli', title: '邮箱' },
-                { field: 'Phone', title: '电话' },
-                { field: 'Address', title: '地址' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Product: [
-                { field: 'ProductId', title: '产品编号' },
-                { field: 'Barcode', title: '产品条码' },
-                { field: 'ProductName', title: '产品名称' },
-                { field: 'money', title: '价格' },
-                { field: 'typeName', title: '类型' },
-                { field: 'Remarks', title: '备注' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ],
-            Bill: [
-                { field: 'BillId', title: '编号' },
-                { field: 'ProductName', title: '产品名称' },
-                { field: 'BillNum', title: '数量' },
-                { field: 'BillType', title: '类型' },
-                { field: 'BillTime', title: '时间' },
-                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
-            ]
-        };
-        SelectTable(showrow[Switch]);
-
-        $('.layui-nav-tree a').click(function () {
-            Switch = $(this).attr('n');
-            SelectTable(showrow[Switch]);
-        });
-        layui.use('table', function () {
-            var table = layui.table;
-            //监听工具条
-            table.on('tool(test)', function (obj) {
-                var data = obj.data;
-                if (obj.event === 'detail') {
-                    var d = showrow[Switch];
-                    var str = '';
-                    $(d).each(function (i, dom) {
-                        if (dom.field != undefined) {
-                            str += `${dom.title}:${data[dom.field]}</br>`;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>仓库后台管理系统</title>
+    <link rel="stylesheet" href="~/Models/lib/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">仓库后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="">控制台</a></li>
+                <li class="layui-nav-item"><a href="">商品管理</a></li>
+                <li class="layui-nav-item"><a href="">用户</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">邮件管理</a></dd>
+                        <dd><a href="">消息管理</a></dd>
+                        <dd><a href="">授权管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        @if (Session.Keys.Count != 0)
+                        {
+                            @Session.Keys.Get(0);
                         }
-                    });
-                    layer.msg(str);
-                } else if (obj.event === 'del') {
-                    var result = [];
-                    for (var i in data) {
-                        if (data[i] != null && data[i] != undefined && data[i].toString() != '') {
-                            result.push(data[i])
-                        }
-                    }
-                    layer.confirm('真的删除行么', function (index) {
-                        $.post('/Home/Test',
-                            { 't': Switch, 'id': result[0] },
-                            function (success) {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('已删除', {
-                                    time: 5000, //5s后自动关闭
-                                });
-                                SelectTable(showrow[Switch])
-                            });
-                    });
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a class="exit">退了</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Staff'>员工管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Bill'>账单管理</a></li>
+                    <li class="layui-nav-item layui-this"><a href="javascript:void(0)" n='Product'>产品管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Purchase'>进货管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Shipping'>出货管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Client'>客户管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Admini'>管理员管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Supplier'>供应商管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Type'>类型管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Order'>订单管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Department'>部门管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Depot'>库存管理</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                <table id="demo" lay-filter="test"></table>
+                <button type="button" class="layui-btn add">添加</button>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
+    <input type="radio" name="name" value="" />
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs detail" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-event="del">删除</a>
+    </script>
+    <script src="~/Models/lib/layui/layui.all.js" charset="utf-8" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+    <script>
+        ; !function () {
+            var layer = layui.layer
+                , form = layui.form
+                , table = layui.table
+                , laydate = layui.laydate;
+            //JavaScript代码区域
+            var Switch = 'Product';
+            $(function () {
+                if (@Session.Keys.Count== 0) {
+                    location.href = "/Admin/Login";
                 }
-            });
-        });
-        function SelectTable(data) {
-            layui.use('table', function () {
-                var table = layui.table;
-                //展示已知数据
-                table.render({
-                    elem: '#demo'
-                    , url: `/Home/${Switch}`
-                    , cols: [data]
-                    , width: 1000
-                    , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
-                    , limit: 5 //每页默认显示的数量
-                    , even: true
-                    , size: 'sm'
-                    , toolbar: true
+                var showrow = {
+                    Department: [
+                        { field: 'departmentId', title: '部门编号', hides: 'true' },
+                        { field: 'departmentName', title: '部门名称', InputType: 'text' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Staff: [
+                        { field: 'StaffId', title: '员工编号', hides: 'true' },
+                        { field: 'StaffName', title: '员工姓名', InputType: 'text' },
+                        { field: 'StaffSex', title: '性别', InputType: 'radio', sex: 'sex' },
+                        { field: 'EntryTime', title: '入职时间', InputType: 'dateTime', dateTime: 'dateTime' },
+                        { field: 'departmentName', title: '部门名称', select: 'select', table: 'Department' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Admini: [
+                        { field: 'adminiId', title: '编号', hides: 'true' },
+                        { field: 'adminiName', title: '用户名', InputType: 'text' },
+                        { field: 'adminiPassword', title: '密码' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Order: [
+                        { field: 'OrderId', title: '编号', hides: 'true' },
+                        { field: 'BarCode', title: '产品条码' },
+                        { field: 'OrderTime', title: '订单时间', InputType: 'dateTime', dateTime: 'dateTime'},
+                        { field: 'address', title: '所在地', InputType: 'text' },
+                        { field: 'Remarks', title: '备注', InputType: 'text' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Supplier: [
+                        { field: 'supplierId', title: '编号', hides: 'true' },
+                        { field: 'principal', title: '负责人', InputType: 'text' },
+                        { field: 'supplierName', title: '供应商名称', InputType: 'text' },
+                        { field: 'Address', title: '地址', InputType: 'text' },
+                        { field: 'phone', title: '电话' },
+                        { field: 'Emli', title: '邮箱', InputType: 'text' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Purchase: [
+                        { field: 'PurchaseId', title: '进货编号', hides: 'true' },
+                        { field: 'ProductId', title: '产品名称', table: 'Product', select: 'select' },
+                        { field: 'supplierId', title: '供应商名称', table: 'Supplier', select: 'select' },
+                        { field: 'number', title: '数量' },
+                        { field: 'status', title: '状态',  table: 'State', select: 'select' },
+                        { field: 'PurchaseTime', title: '进货时间', InputType: 'dateTime', dateTime: 'dateTime' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Shipping: [
+                        { field: 'ShippingId', title: '出货编号', hides: 'true' },
+                        { field: 'ProductName', title: '产品名称', InputType: 'text', table: 'Product', select: 'select' },
+                        { field: 'ClientName', title: '客户名称', InputType: 'text', table: 'Client', select: 'select'},
+                        { field: 'number', title: '数量' },
+                        { field: 'status', title: '状态', table: 'State', select: 'select' },
+                        { field: 'ShippingTime', title: '出货时间', InputType: 'dateTime', dateTime: 'dateTime' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Type: [
+                        { field: 'typeID', title: '类型编号', hides: 'true' },
+                        { field: 'typeName', title: '类型名称', InputType: 'text' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Client: [
+                        { field: 'ClientId', title: '编号', hides: 'true' },
+                        { field: 'ClientName', title: '姓名', InputType: 'text' },
+                        { field: 'Emli', title: '邮箱', InputType: 'text' },
+                        { field: 'Phone', title: '电话' },
+                        { field: 'Address', title: '地址', InputType: 'text' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Product: [
+                        { field: 'ProductId', title: '产品编号', hides: 'true' },
+                        { field: 'Barcode', title: '产品条码' },
+                        { field: 'ProductName', title: '产品名称' },
+                        { field: 'money', title: '价格' },
+                        { field: 'typeName', title: '类型', table: 'Type', select: 'select'  },
+                        { field: 'Remarks', title: '备注' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Bill: [
+                        { field: 'BillId', title: '编号', hides: 'true' },
+                        { field: 'ProductName', title: '产品名称', table: 'Product', select: 'select' },
+                        { field: 'BillNum', title: '数量' },
+                        { field: 'BillTime', title: '时间', InputType: 'dateTime', dateTime: 'dateTime'},
+                        { field: 'BillType', title: '备注'},
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ],
+                    Depot: [
+                        { field: 'Id', title: '编号', hides: 'true' },
+                        { field: 'ProductId', title: '产品名称', table: 'Product', select: 'select' },
+                        { field: 'stock', title: '数量' },
+                        { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ]
+                };
+                SelectTable(showrow[Switch]);
+                //切换表
+                $('.layui-nav-tree a').click(function () {
+                    Switch = $(this).attr('n');
+                    SelectTable(showrow[Switch]);
                 });
+                //退出登录
+                $('.exit').click(function () {
+                    layer.confirm('是否退出登录', function (index) {
+                    @{Session.Clear();}
+                        location.href = "/Admin/Login";
+                        layer.close(index);
+                    });
+                });
+
+                //添加数据
+                $('.add').click(function () {
+                    //动态创建from表单
+                    //弹窗
+                    layer.open({
+                        title: '在线调试'
+                        , content: openAddData(showrow[Switch])
+                        , btn: ['添加', '取消']
+                        , type: 1
+                        , id: 'add'
+                        , success: function (layero, index) {
+                            form.render();
+                            laydate.render({
+                                elem: '#text'
+                                , trigger: 'click'
+                            });
+                        }
+                        , yes: function (index, layero) {
+                            $('[lay-filter="formDemo"]').click();
+                        }
+                        , btn2: function () { }
+                    });
+                });
+                form.on('submit(formDemo)', function (data) {
+                    console.log(data);
+                    $.post(
+                        '/Home/Add' + Switch,
+                        data.field,
+                        function (success) {
+                            var Flag = success;
+                            //判断是否添加成功
+                            if (Flag == 'True') {
+                                layer.closeAll();
+                                SelectTable(showrow[Switch]);
+                                layer.msg('添加数据成功');
+                            } else {
+                                layer.msg('添加数据失败');
+                                layer.closeAll();
+                            }
+                        });
+
+                    return false;
+                });
+                //监听工具条
+                table.on('tool(test)', function (obj) {
+
+
+                    var data = obj.data;
+                    if (obj.event === 'detail') {
+                        var d = showrow[Switch];
+                        var str = '';
+                        $(d).each(function (i, dom) {
+                            if (dom.field != undefined) {
+                                str += `${dom.title}:${data[dom.field]}</br>`;
+                            }
+                        });
+                        layer.msg(str);
+                    } else if (obj.event === 'del') {
+                        var result = data[showrow[Switch][0].field];
+                        layer.confirm('真的删除行么', function (index) {
+                            $.post('/Home/Test',
+                                { 't': Switch, 'id': result },
+                                function (success) {
+                                    var str = '已删除'
+                                    if (success=="1") {
+                                        obj.del();
+                                    } else {
+                                        str = success;
+                                    }
+                                    layer.close(index);
+                                    layer.msg(str, {
+                                        time: 5000, //5s后自动关闭
+                                    });
+                                    SelectTable(showrow[Switch])
+                                });
+                        });
+                    }
+                });
+                //弹出框表单
+                function openAddData(dom) {
+                    var domStr = "";
+                    $(dom).each(function (i, dom) {
+                        var sr = '';
+                        if (dom.select == 'select') {
+                            $.ajax({
+                              type: "POST",
+                              url: `/Home/Select${dom.table}`,
+                              async: false,
+                              success: function (success) {
+                                  var select = `<div class="layui-form-item"><label class="layui-form-label">${dom.title}</label><div class="layui-input-inline" ><select name="${dom.field}">`;
+                                    $(success).each(function (i, d) {
+                                        select += `<option value="${d.id}" name="123">${d.name}</option>`
+                                    });
+                                    sr = select + '</select></div></div>';
+                                },
+                              dataType: "json"
+                            });
+
+                        } else if (dom.sex == 'sex') {
+                            sr = `<div class="layui-form-item">
+                                    <label class="layui-form-label">${dom.title}</label>
+                                    <div class="layui-input-block">
+                                      <input type="radio" name="${dom.field}" value="true" title="男">
+                                      <input type="radio" name="${dom.field}" value="false" title="女" checked>
+                                    </div>
+                                  </div>`
+                        } else if (dom.dateTime == 'dateTime') {
+                            sr = `<div class="layui-form-item">
+                                            <label class="layui-form-label">${dom.title}</label>
+                                            <div class="layui-input-inline">
+                                                <input
+                                                type="${dom.InputType}"
+                                                name="${dom.field}"
+                                                id='text'
+                                                class="layui-input">
+                                            </div>
+                                     </div>`
+                        } else if (dom.field != undefined && dom.hides != 'true') {
+                            sr = `<div class="layui-form-item">
+                                            <label class="layui-form-label">${dom.title}</label>
+                                            <div class="layui-input-inline">
+                                                <input
+                                                type="${dom.InputType}"
+                                                name="${dom.field}"
+                                                class="layui-input">
+                                            </div>
+                                     </div>`
+                        }
+                        domStr += sr
+                    });
+                    return '<from class="layui-form" >' + domStr + `<input namae='Switch' hidden value='${Switch}'><button hidden lay-submit lay-filter="formDemo">立即提交</button></from>`;
+                }
+                //表格数据显示
+                function SelectTable(data) {
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        //展示已知数据
+                        table.render({
+                            elem: '#demo'
+                            , url: `/Home/${Switch}`
+                            , cols: [data]
+                            , width: 1000
+                            , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
+                            , limit: 5 //每页默认显示的数量
+                            , even: true
+                            , size: 'sm'
+                            , toolbar: true
+                        });
+                    });
+                };
             });
-        }
-    })
-</script>
+        }();
+    </script>
+</body>
+</html>

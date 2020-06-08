@@ -53,6 +53,7 @@
     <Compile Include="clientDal.cs" />
     <Compile Include="DBHelper.cs" />
     <Compile Include="departmentDal.cs" />
+    <Compile Include="DepotDal.cs" />
     <Compile Include="OrderDal.cs" />
     <Compile Include="ProductDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

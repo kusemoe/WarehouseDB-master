@@ -20,6 +20,7 @@ namespace Model
             this.Bill = new HashSet<Bill>();
             this.Purchase = new HashSet<Purchase>();
             this.Shipping = new HashSet<Shipping>();
+            this.depot = new HashSet<depot>();
         }
     
         public int ProductId { get; set; }
@@ -36,5 +37,7 @@ namespace Model
         public virtual ICollection<Purchase> Purchase { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shipping> Shipping { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<depot> depot { get; set; }
     }
 }

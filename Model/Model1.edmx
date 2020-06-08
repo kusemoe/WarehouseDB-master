@@ -40,6 +40,14 @@
           <Property Name="departmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="departmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="depot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="OrderId" />
@@ -123,6 +131,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__depot__ProductId__60A75C0F">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="depot" Type="Self.depot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="depot">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__product__typeId__2D27B809">
           <End Role="type" Type="Self.type" Multiplicity="1" />
           <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -200,6 +220,7 @@
           <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="depot" EntityType="Self.depot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
@@ -210,6 +231,10 @@
           <AssociationSet Name="FK__Bill__ProductId__31EC6D26" Association="Self.FK__Bill__ProductId__31EC6D26">
             <End Role="product" EntitySet="product" />
             <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__depot__ProductId__60A75C0F" Association="Self.FK__depot__ProductId__60A75C0F">
+            <End Role="product" EntitySet="product" />
+            <End Role="depot" EntitySet="depot" />
           </AssociationSet>
           <AssociationSet Name="FK__product__typeId__2D27B809" Association="Self.FK__product__typeId__2D27B809">
             <End Role="type" EntitySet="type" />
@@ -302,6 +327,7 @@
           <NavigationProperty Name="type" Relationship="Self.FK__product__typeId__2D27B809" FromRole="product" ToRole="type" />
           <NavigationProperty Name="Purchase" Relationship="Self.FK__Purchase__Produc__34C8D9D1" FromRole="product" ToRole="Purchase" />
           <NavigationProperty Name="Shipping" Relationship="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4" FromRole="product" ToRole="Shipping" />
+          <NavigationProperty Name="depot" Relationship="WarehouseDBModel.FK__depot__ProductId__5CD6CB2B" FromRole="product" ToRole="depot" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -435,6 +461,11 @@
             <End Role="product" EntitySet="product" />
             <End Role="Shipping" EntitySet="Shipping" />
           </AssociationSet>
+          <EntitySet Name="depot" EntityType="WarehouseDBModel.depot" />
+          <AssociationSet Name="FK__depot__ProductId__5CD6CB2B" Association="WarehouseDBModel.FK__depot__ProductId__5CD6CB2B">
+            <End Role="product" EntitySet="product" />
+            <End Role="depot" EntitySet="depot" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Purchase__suppli__49C3F6B7">
           <End Type="WarehouseDBModel.supplier" Role="supplier" Multiplicity="1" />
@@ -481,6 +512,27 @@
               <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="Shipping">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="depot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="WarehouseDBModel.FK__depot__ProductId__5CD6CB2B" FromRole="depot" ToRole="product" />
+        </EntityType>
+        <Association Name="FK__depot__ProductId__5CD6CB2B">
+          <End Type="WarehouseDBModel.product" Role="product" Multiplicity="1" />
+          <End Type="WarehouseDBModel.depot" Role="depot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="depot">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
@@ -605,6 +657,15 @@
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="clientId" ColumnName="clientId" />
                 <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="depot">
+            <EntityTypeMapping TypeName="WarehouseDBModel.depot">
+              <MappingFragment StoreEntitySet="depot">
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

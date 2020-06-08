@@ -285,15 +285,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Models\lib\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="Models\lib\bootstrap\css\bootstrap.css.map" />
     <Content Include="Models\lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Models\lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Models\lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

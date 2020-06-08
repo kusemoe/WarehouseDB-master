@@ -14,9 +14,18 @@ namespace BLL
         {
             return dal.SelectList().ToList();
         }
-        public int Remove(client t)
+        public int Remove(client t,out string error)
         {
-            return dal.Remove(t);
+            try
+            {
+                error = "删除成功";
+                return dal.Remove(t);
+            }
+            catch (Exception)
+            {
+                error = "对应外键数据不能直接删除";
+            }
+            return 0;
         }
         public int Add(client client)
         {

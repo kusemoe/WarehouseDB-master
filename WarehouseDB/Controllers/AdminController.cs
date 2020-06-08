@@ -28,7 +28,7 @@ namespace WarehouseDB.Controllers
             {
                 HttpContext.Session[ad.adminiName] =1;
                 HttpContext.Session[ad.adminiPassword] =2;
-                return RedirectToRoute(new { controller = "Home", action = "About" });
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
         }
     }

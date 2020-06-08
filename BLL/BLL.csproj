@@ -52,6 +52,7 @@
     <Compile Include="BillBll.cs" />
     <Compile Include="clientBll.cs" />
     <Compile Include="departmentBll.cs" />
+    <Compile Include="DepotBll.cs" />
     <Compile Include="OrderBll.cs" />
     <Compile Include="ProductBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

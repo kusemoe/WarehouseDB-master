@@ -1,14 +1,8 @@
 ﻿using BLL;
-using Microsoft.Ajax.Utilities;
 using Model;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Deployment.Internal;
 using System.Linq;
-using System.Reflection;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Query.Dynamic;
 
@@ -21,6 +15,7 @@ namespace WarehouseDB.Controllers
             return View();
         }
         public ActionResult About() => View();
+        #region 数据查询
         public ActionResult Type(int page, int limit)
         {
             var bll = new TypeBll();
@@ -237,13 +232,33 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult Depot(int page, int limit)
+        {
+            var bll = new DepotBll();
+            var List = bll.SelectList().Select(i => new
+            {
+                i.Id,
+                ProductId = i.product.ProductName,
+                i.stock
+            });
+            var ListJson = new
+            {
+                code = 0,
+                msg = "",
+                count = List.Count(),
+                data = List.Skip((page - 1) * limit).Take(limit).ToList()
+            };
+            return Json(ListJson, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region 数据删除
         public ActionResult Test(string t, int id)
         {
+            string error = "1";
             switch (t)
             {
                 case "Type":
-                    new TypeBll().Remove(new type { typeID = id });
+                    new TypeBll().Remove(new type { typeID = id }, out error);
                     break;
                 case "Bill":
                     new BillBll().Remove(new Bill { BillId = id });
@@ -255,16 +270,16 @@ namespace WarehouseDB.Controllers
                     new OrderBll().Remove(new Order { OrderId = id });
                     break;
                 case "Client":
-                    new clientBll().Remove(new client { ClientId = id });
+                    new clientBll().Remove(new client { ClientId = id }, out error);
                     break;
                 case "Admini":
                     new AdminiBll().Remove(new admini { adminiId = id });
                     break;
                 case "Product":
-                    new ProductBll().Remove(new product { ProductId = id });
+                    new ProductBll().Remove(new product { ProductId = id }, out error);
                     break;
                 case "Supplier":
-                    new supplierBll().Remove(new supplier { supplierId = id });
+                    new supplierBll().Remove(new supplier { supplierId = id }, out error);
                     break;
                 case "Purchase":
                     new PurchaseBll().Remove(new Purchase { PurchaseId = id });
@@ -275,9 +290,14 @@ namespace WarehouseDB.Controllers
                 case "Department":
                     new departmentBll().Remove(new department { departmentId = id });
                     break;
+                case "Depot":
+                    new DepotBll().Remove(new depot { Id = id });
+                    break;
             }
-            return Content("1");
+            return Content(error);
         }
+        #endregion
+
 
         public string StateGet(int n)
         {
@@ -365,18 +385,27 @@ namespace WarehouseDB.Controllers
             var Flag = new ProductBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
+        //Purchase Shipping
         public ActionResult AddPurchase(Purchase AddData)
         {
             //ProductId: "1"
             //supplierId: "1"
             var Flag = new PurchaseBll().Add(AddData) != 0;
+            if (Flag)
+            {
+                new DepotBll().Update(AddData.ProductId, AddData.number, true);
+            }
             return Content(Flag.ToString());
         }
-        public ActionResult AddShipping(Shipping AddData,int ClientName, int ProductName)
+        public ActionResult AddShipping(Shipping AddData, int ClientName, int ProductName)
         {
             AddData.clientId = ClientName;
             AddData.ProductId = ProductName;
             var Flag = new ShippingBll().Add(AddData) != 0;
+            if (Flag)
+            {
+                new DepotBll().Update(AddData.ProductId, AddData.number, false);
+            }
             return Content(Flag.ToString());
         }
         public ActionResult AddStaff(staff AddData, string departmentName)
@@ -395,6 +424,12 @@ namespace WarehouseDB.Controllers
             var Flag = new AdminiBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
+        public ActionResult AddDepot(depot AddData)
+        {
+            var Flag = new DepotBll().Add(AddData) != 0;
+            return Content(Flag.ToString());
+        }
+
     }
 
 

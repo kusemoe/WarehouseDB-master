@@ -36,5 +36,6 @@ namespace Model
         public virtual DbSet<supplier> supplier { get; set; }
         public virtual DbSet<type> type { get; set; }
         public virtual DbSet<Shipping> Shipping { get; set; }
+        public virtual DbSet<depot> depot { get; set; }
     }
 }
