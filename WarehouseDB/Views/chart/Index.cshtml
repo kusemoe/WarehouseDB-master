@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "chart";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div>
+
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+</div>
+
+@section Sidebar{
+    <li class="layui-nav-item layui-nav-item2">
+        <a href="javascript:;">图表数据</a>
+        <dl class="layui-nav-child">
+            <dd><a href="/Chart/Index">类型数据金额</a></dd>
+            <dd><a href="javascript:;">选项二</a></dd>
+            <dd><a href="javascript:;">选项三</a></dd>
+            <dd><a href="">跳转项</a></dd>
+        </dl>
+    </li>
+}
+@section scripts{
+    <script src="~/Models/js/echarts.min.js"></script>
+    <script type="text/javascript">
+        var money = [];
+        var type = [];
+        $.post('/Chart/GetData',
+            {},
+            function (success) {
+                money = success.money;
+                type = success.type;
+                console.log(type);
+                console.log(money);
+                var myChart = echarts.init(document.getElementById('main'));
+                var option = {
+                    title: {
+                        text: '类型出库金额'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data: ['销量']
+                    },
+                    xAxis: {
+                        data: type
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '销量',
+                        type: 'bar',
+                        data: money
+                    }]
+                };
+                myChart.setOption(option);
+            }, 'json')
+        $('dd a').click(function () {
+            if ('@ViewBag.Title'=='chart') {
+                window.location='@Url.Action("Test1", "Home")'
+            } else {
+                window.location='@Url.Action("Index", "chart")'
+            }
+        });
+
+    </script>
+}

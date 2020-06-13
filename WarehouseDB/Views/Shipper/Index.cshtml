@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    //Layout = null;
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<link rel="stylesheet" href="~/Models/lib/layui/css/layui.css">
+
+<table id="demo" lay-filter="test"></table>
+<table id="demo2" lay-filter="test2"></table>
+
+<input type="button" class="AddShipper" name="name" value="添加" />
+
+<script type="text/html" id="AddShipper">
+    <form action="/" method="post">
+        name<input type="" value="" />
+        sex<input type="" value="" />
+    </form>
+</script>
+
+@section Sidebar{
+    <li class="layui-nav-item layui-nav-item2">
+        <a href="javascript:;">出入库管理</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">入库管理</a></dd>
+            <dd><a href="javascript:;">出库管理</a></dd>
+        </dl>
+    </li>
+}
+@section scripts{
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs detail" lay-event="detail">选择</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-event="del">删除</a>
+    </script>
+    <script>
+        ; !function () {
+            var layer = layui.layer
+                , form = layui.form
+                , table = layui.table
+                , layer = layui.layer
+
+            var row = [
+                { field: 'ShippingId', title: '部门编号', hides: 'true' },
+                { field: 'ShipperId', title: '部门编号2' },
+                { field: 'clientId', title: '部门编号3' },
+                { field: 'number', title: '部门编号4' },
+                { field: 'status', title: '部门编号5' },
+                { field: 'ProductId', title: '部门编号6' },
+                { field: 'ShippingTime', title: '部门名称', InputType: 'text' },
+                { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+            ]
+            var row2 = [
+                { field: 'ShipperId', title: '出货单号', hides: 'true' },
+                { field: 'ShippingTime', title: '出货时间' },
+                { field: 'lumpSum', title: '金额' }
+            ]
+
+
+            //监听行单击事件（双击事件为：rowDouble）
+            table.on('row(test2)', function (obj) {
+                var data = obj.data;
+
+                layer.alert(JSON.stringify(data), {
+                    title: '当前行数据：'
+                });
+                ShowData('#demo', '/Shipper/SelectList', row, data.ShipperId);
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            ShowData('#demo2', '/Shipper/GetFrom', row2);
+
+            $('.AddShipper').click(function () {
+                layer.open({
+                    content: $("#AddShipper").html()
+                });
+            })
+
+            function ShowData(dom, fun, row, whe) {
+                //展示已知数据
+                table.render({
+                    elem: dom
+                    , url: fun
+                    , cols: [row]
+                    , width: 1000
+                    , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
+                    , limit: 10 //每页默认显示的数量
+                    , even: true
+                    , size: 'sm'
+                    , where: {
+                        id: whe
+                    }
+                });
+            }
+        }();
+    </script>
+}
+

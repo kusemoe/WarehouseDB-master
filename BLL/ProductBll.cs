@@ -2,6 +2,11 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Xml.Schema;
+
 namespace BLL
 {
     public class ProductBll
@@ -21,9 +26,12 @@ namespace BLL
             }
             return 0;
         }
+
+        
         public int Add(product product)
         {
             return dal.Add(product);
         }
     }
+
 }

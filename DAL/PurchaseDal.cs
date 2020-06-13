@@ -9,5 +9,11 @@ namespace DAL
 {
     public class PurchaseDal : DBHelper<Purchase>
     {
+        public new int Add(Purchase purchase)
+        {
+            purchase.PurchaseTime = DateTime.Now;
+            return base.Add(purchase);
+        }
+
     }
 }

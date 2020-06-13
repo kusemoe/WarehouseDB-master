@@ -22,5 +22,16 @@ namespace BLL
         {
             return dal.Add(bill);
         }
+        public List<GetTypeAndMoney> Select()
+        {
+            var linq = dal.SelectList()
+                .GroupBy(i => i.product.type.typeName)
+                .Select(i => new GetTypeAndMoney
+                {
+                    type = i.Key,
+                    money = i.Sum(j => j.product.money * j.BillNum),
+                });
+            return linq.ToList();
+        }
     }
 }

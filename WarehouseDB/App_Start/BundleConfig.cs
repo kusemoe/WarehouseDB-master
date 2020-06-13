@@ -25,6 +25,13 @@ namespace WarehouseDB
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            #region 自己添加
+            bundles.Add(new ScriptBundle("~/bundles/layui").Include(
+                       "~/Models/lib/layui/layui.all.js"));
+
+            #endregion
+
         }
     }
 }

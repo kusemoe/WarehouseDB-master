@@ -45,6 +45,10 @@ namespace BLL
             else
             {
                 _ = flag ? depot.First().stock += num : depot.First().stock -= num;
+                if (depot.First().stock == 0)
+                {
+                    return dal.Remove(depot.First());
+                }
                 return dal.Update(depot.First());
             }
         }

@@ -25,17 +25,19 @@ namespace Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<department> department { get; set; }
         public virtual DbSet<admini> admini { get; set; }
         public virtual DbSet<Bill> Bill { get; set; }
         public virtual DbSet<client> client { get; set; }
-        public virtual DbSet<department> department { get; set; }
+        public virtual DbSet<depot> depot { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<product> product { get; set; }
         public virtual DbSet<Purchase> Purchase { get; set; }
+        public virtual DbSet<Shipping> Shipping { get; set; }
+        public virtual DbSet<ShippingFrom> ShippingFrom { get; set; }
+        public virtual DbSet<ShippingSnap> ShippingSnap { get; set; }
         public virtual DbSet<staff> staff { get; set; }
         public virtual DbSet<supplier> supplier { get; set; }
         public virtual DbSet<type> type { get; set; }
-        public virtual DbSet<Shipping> Shipping { get; set; }
-        public virtual DbSet<depot> depot { get; set; }
     }
 }

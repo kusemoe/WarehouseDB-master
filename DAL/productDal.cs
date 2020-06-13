@@ -9,9 +9,10 @@ namespace DAL
     public class ProductDal : DBHelper<product>
     {
         WarehouseDBEntities entities = new WarehouseDBEntities();
+
         public List<product> SelectProduct()
         {
-            return entities.product.ToList();
+            return base.SelectList().ToList();
         }
     }
 }

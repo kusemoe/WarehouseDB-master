@@ -17,7 +17,7 @@ namespace Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public client()
         {
-            this.Shipping = new HashSet<Shipping>();
+            this.ShippingFrom = new HashSet<ShippingFrom>();
         }
     
         public int ClientId { get; set; }
@@ -27,6 +27,6 @@ namespace Model
         public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shipping> Shipping { get; set; }
+        public virtual ICollection<ShippingFrom> ShippingFrom { get; set; }
     }
 }

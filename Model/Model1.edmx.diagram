@@ -5,24 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3cf7c029c987463cbaab8aeb6a54c062" Name="Diagram1" ZoomLevel="82">
-        <EntityTypeShape EntityType="WarehouseDBModel.admini" Width="1.5" PointX="9.25" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Bill" Width="1.5" PointX="0.625" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.client" Width="1.5" PointX="5.125" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Order" Width="1.5" PointX="9.125" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.product" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Purchase" Width="1.5" PointX="4.875" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.staff" Width="1.5" PointX="7" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.supplier" Width="1.5" PointX="7.125" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WarehouseDBModel.type" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="WarehouseDBModel.FK__Bill__ProductId__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="WarehouseDBModel.FK__product__typeId__2D27B809" ManuallyRouted="false" />
-        <AssociationConnector Association="WarehouseDBModel.FK__Purchase__Produc__34C8D9D1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WarehouseDBModel.admini" Width="1.5" PointX="7.375" PointY="4" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Bill" Width="1.5" PointX="0.5" PointY="6.625" />
+        <EntityTypeShape EntityType="WarehouseDBModel.client" Width="1.5" PointX="0.625" PointY="2.375" />
+        <EntityTypeShape EntityType="WarehouseDBModel.depot" Width="1.5" PointX="2.625" PointY="8.625" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Order" Width="1.5" PointX="8.375" PointY="9.125" />
+        <EntityTypeShape EntityType="WarehouseDBModel.product" Width="1.5" PointX="2.75" PointY="4.875" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Purchase" Width="1.5" PointX="4.75" PointY="6.125" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Shipping" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="WarehouseDBModel.ShippingFrom" Width="1.5" PointX="2.625" PointY="2.375" />
+        <EntityTypeShape EntityType="WarehouseDBModel.ShippingSnap" Width="1.5" PointX="4.625" PointY="9.125" />
+        <EntityTypeShape EntityType="WarehouseDBModel.staff" Width="1.5" PointX="6.625" PointY="9.125" />
+        <EntityTypeShape EntityType="WarehouseDBModel.supplier" Width="1.5" PointX="6.625" PointY="6.125" />
+        <EntityTypeShape EntityType="WarehouseDBModel.type" Width="1.5" PointX="0.625" PointY="4.75" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Bill__ProductId__31EC6D26" />
+        <AssociationConnector Association="WarehouseDBModel.FK__ShippingF__clien__07C12930" />
+        <AssociationConnector Association="WarehouseDBModel.FK__depot__ProductId__60A75C0F" />
+        <AssociationConnector Association="WarehouseDBModel.FK__product__typeId__2D27B809" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Purchase__Produc__4AB81AF0" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__Produc__0B91BA14" />
         <AssociationConnector Association="WarehouseDBModel.FK__Purchase__suppli__49C3F6B7" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Shipping" Width="1.5" PointX="2.875" PointY="7.75" />
-        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__client__4D94879B" />
-        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__Produc__4E88ABD4" />
-        <EntityTypeShape EntityType="WarehouseDBModel.depot" Width="1.5" PointX="2.875" PointY="1.625" />
-        <AssociationConnector Association="WarehouseDBModel.FK__depot__ProductId__5CD6CB2B" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Shipping__Shippe__0A9D95DB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

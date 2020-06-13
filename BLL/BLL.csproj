@@ -58,6 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseBll.cs" />
     <Compile Include="ShippingBll.cs" />
+    <Compile Include="ShippingFromBll.cs" />
+    <Compile Include="ShippingSnapBll.cs" />
     <Compile Include="staffBll.cs" />
     <Compile Include="supplierBll.cs" />
     <Compile Include="TypeBll.cs" />

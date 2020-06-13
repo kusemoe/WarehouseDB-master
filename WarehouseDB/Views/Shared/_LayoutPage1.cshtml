@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Models/lib/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">仓库后台管理系统</div>
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item">@Html.ActionLink("出入库管理", "Index", "Shipper")</li>
+                <li class="layui-nav-item">@Html.ActionLink("表单管理","Index","Home")</li>
+                <li class="layui-nav-item">@Html.ActionLink("数据分析", "Index", "chart")</li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">邮件管理</a></dd>
+                        <dd><a href="">消息管理</a></dd>
+                        <dd><a href="">授权管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        @Session["adminName"]
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a class="exit">退了</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    @RenderSection("Sidebar", required: false);
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            @RenderBody()
+        </div>
+
+        <div class="layui-footer">
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/layui")
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

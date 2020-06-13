@@ -15,13 +15,11 @@ namespace Model
     public partial class Shipping
     {
         public int ShippingId { get; set; }
-        public int clientId { get; set; }
+        public string ShipperId { get; set; }
         public int number { get; set; }
-        public int status { get; set; }
         public int ProductId { get; set; }
-        public System.DateTime ShippingTime { get; set; }
     
-        public virtual client client { get; set; }
         public virtual product product { get; set; }
+        public virtual ShippingFrom ShippingFrom { get; set; }
     }
 }

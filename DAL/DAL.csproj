@@ -59,6 +59,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseDal.cs" />
     <Compile Include="ShippingDal.cs" />
+    <Compile Include="ShippingFromDal.cs" />
+    <Compile Include="ShippingSnapDal.cs" />
     <Compile Include="staffDal.cs" />
     <Compile Include="supplierDal.cs" />
     <Compile Include="TypeDal.cs" />

@@ -11,6 +11,7 @@ namespace BLL
     {
         AdminiDal dal = new AdminiDal();
         public admini AdminiLogin(admini admini) => dal.AdminiLogin(admini);
+        public admini AdminiLogin(admini admini, out string text) => dal.AdminiLogin(admini, out text);
         public List<admini> SelectList()
         {
             return dal.SelectList().ToList();

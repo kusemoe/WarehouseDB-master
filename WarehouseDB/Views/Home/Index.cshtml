@@ -1,91 +1,40 @@
 ﻿@{
-    ViewBag.Title = "Index";
-    Layout = null;
+    ViewBag.Title = "表单管理";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>仓库后台管理系统</title>
-    <link rel="stylesheet" href="~/Models/lib/layui/css/layui.css">
-</head>
-<body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <div class="layui-logo">仓库后台管理系统</div>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="">控制台</a></li>
-                <li class="layui-nav-item"><a href="">商品管理</a></li>
-                <li class="layui-nav-item"><a href="">用户</a></li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其它系统</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">邮件管理</a></dd>
-                        <dd><a href="">消息管理</a></dd>
-                        <dd><a href="">授权管理</a></dd>
-                    </dl>
-                </li>
-            </ul>
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        @if (Session.Keys.Count != 0)
-                        {
-                            @Session.Keys.Get(0);
-                        }
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">基本资料</a></dd>
-                        <dd><a href="">安全设置</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a class="exit">退了</a></li>
-            </ul>
-        </div>
-
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Staff'>员工管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Bill'>账单管理</a></li>
-                    <li class="layui-nav-item layui-this"><a href="javascript:void(0)" n='Product'>产品管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Purchase'>进货管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Shipping'>出货管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Client'>客户管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Admini'>管理员管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Supplier'>供应商管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Type'>类型管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Order'>订单管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Department'>部门管理</a></li>
-                    <li class="layui-nav-item"><a href="javascript:void(0)" n='Depot'>库存管理</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">
-                <table id="demo" lay-filter="test"></table>
-                <button type="button" class="layui-btn add">添加</button>
-            </div>
-        </div>
-
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © layui.com - 底部固定区域
-        </div>
+<div style="padding: 15px;">
+    <div class="layui-row">
+        <div class="Query layui-form layui-col-md9"></div>
     </div>
-    <input type="radio" name="name" value="" />
-
+    <div class="layui-row">
+        <table id="demo" lay-filter="test"></table>
+        <button type="button" class="layui-btn add">添加</button>
+    </div>
+</div>
+@section Sidebar{
+    <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">表单管理</a>
+        <dl class="layui-nav-child">
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Staff'>员工管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Bill'>账单管理</a></dd>
+            <dd class="layui-nav-item li layui-this"><a href="javascript:void(0)" n='Product'>产品管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Purchase'>进货管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Shipping'>出货管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Client'>客户管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Admini'>管理员管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Supplier'>供应商管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Type'>类型管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Order'>订单管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Department'>部门管理</a></dd>
+            <dd class="layui-nav-item li"><a href="javascript:void(0)" n='Depot'>库存管理</a></dd>
+        </dl>
+    </li>
+}
+@section scripts{
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-primary layui-btn-xs detail" lay-event="detail">查看</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-event="del">删除</a>
     </script>
-    <script src="~/Models/lib/layui/layui.all.js" charset="utf-8" type="text/javascript"></script>
-    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
     <script>
         ; !function () {
             var layer = layui.layer
@@ -95,9 +44,6 @@
             //JavaScript代码区域
             var Switch = 'Product';
             $(function () {
-                if (@Session.Keys.Count== 0) {
-                    location.href = "/Admin/Login";
-                }
                 var showrow = {
                     Department: [
                         { field: 'departmentId', title: '部门编号', hides: 'true' },
@@ -107,9 +53,9 @@
                     Staff: [
                         { field: 'StaffId', title: '员工编号', hides: 'true' },
                         { field: 'StaffName', title: '员工姓名', InputType: 'text' },
-                        { field: 'StaffSex', title: '性别', InputType: 'radio', sex: 'sex' },
                         { field: 'EntryTime', title: '入职时间', InputType: 'dateTime', dateTime: 'dateTime' },
-                        { field: 'departmentName', title: '部门名称', select: 'select', table: 'Department' },
+                        { field: 'departmentId', title: '部门名称', select: 'select', table: 'Department' },
+                        { field: 'StaffSex', title: '性别', InputType: 'radio', sex: 'sex' },
                         { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ],
                     Admini: [
@@ -141,16 +87,14 @@
                         { field: 'supplierId', title: '供应商名称', table: 'Supplier', select: 'select' },
                         { field: 'number', title: '数量' },
                         { field: 'status', title: '状态',  table: 'State', select: 'select' },
-                        { field: 'PurchaseTime', title: '进货时间', InputType: 'dateTime', dateTime: 'dateTime' },
+                        { field: 'PurchaseTime', title: '进货时间', InputType: 'dateTime', dateTime: 'dateTime', hides: 'true'},
                         { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ],
                     Shipping: [
                         { field: 'ShippingId', title: '出货编号', hides: 'true' },
-                        { field: 'ProductName', title: '产品名称', InputType: 'text', table: 'Product', select: 'select' },
-                        { field: 'ClientName', title: '客户名称', InputType: 'text', table: 'Client', select: 'select'},
-                        { field: 'number', title: '数量' },
-                        { field: 'status', title: '状态', table: 'State', select: 'select' },
-                        { field: 'ShippingTime', title: '出货时间', InputType: 'dateTime', dateTime: 'dateTime' },
+                        { field: 'ShipperId', title: '出货单号'},
+                        { field: 'ProductId', title: '产品名称', InputType: 'text', table: 'DepotNum', select: 'select' },
+                        { field: 'number', title: '数量' ,max:''},
                         { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ],
                     Type: [
@@ -171,13 +115,13 @@
                         { field: 'Barcode', title: '产品条码' },
                         { field: 'ProductName', title: '产品名称' },
                         { field: 'money', title: '价格' },
-                        { field: 'typeName', title: '类型', table: 'Type', select: 'select'  },
+                        { field: 'typeId', title: '类型', table: 'Type', select: 'select'  },
                         { field: 'Remarks', title: '备注' },
                         { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ],
                     Bill: [
                         { field: 'BillId', title: '编号', hides: 'true' },
-                        { field: 'ProductName', title: '产品名称', table: 'Product', select: 'select' },
+                        { field: 'ProductId', title: '产品名称', table: 'Product', select: 'select' },
                         { field: 'BillNum', title: '数量' },
                         { field: 'BillTime', title: '时间', InputType: 'dateTime', dateTime: 'dateTime'},
                         { field: 'BillType', title: '备注'},
@@ -192,7 +136,7 @@
                 };
                 SelectTable(showrow[Switch]);
                 //切换表
-                $('.layui-nav-tree a').click(function () {
+                $('.layui-nav-tree .li a').click(function () {
                     Switch = $(this).attr('n');
                     SelectTable(showrow[Switch]);
                 });
@@ -200,11 +144,10 @@
                 $('.exit').click(function () {
                     layer.confirm('是否退出登录', function (index) {
                     @{Session.Clear();}
-                        location.href = "/Admin/Login";
+                        location.href = "@Url.Action("Index", "Admin")";
                         layer.close(index);
                     });
                 });
-
                 //添加数据
                 $('.add').click(function () {
                     //动态创建from表单
@@ -248,10 +191,13 @@
 
                     return false;
                 });
+                form.on('submit(QueryDemo)', function (data) {
+                    console.log(data.field);
+                    SelectTable(showrow[Switch], data.field);
+                    return false;
+                });
                 //监听工具条
                 table.on('tool(test)', function (obj) {
-
-
                     var data = obj.data;
                     if (obj.event === 'detail') {
                         var d = showrow[Switch];
@@ -283,6 +229,29 @@
                         });
                     }
                 });
+                //监听select选择
+                form.on('select(ProductId)', function (data) {
+                    if (Switch != 'Shipping') {
+                        return;
+                    }
+                    console.log(data.value); //得到被选中的值
+                    $.post(
+                        "/Home/GetSelectDepot"
+                        , { id: data.value }
+                        , function (success) {
+                            var MaxNum = parseInt(success);
+                            $("[name='number']").attr({ 'lay-verify': 'max', 'max': MaxNum});
+                        });
+                });
+                form.verify({
+                    max: function (value, item) {
+                        var max = $(item).attr('max');
+                        if (parseInt(value) > parseInt(max)) {
+                            $(item).val(max);
+                            return `出库数量不能大于库存数,当前库存数为${max}`;
+                        }
+                    }
+                });
                 //弹出框表单
                 function openAddData(dom) {
                     var domStr = "";
@@ -293,8 +262,9 @@
                               type: "POST",
                               url: `/Home/Select${dom.table}`,
                               async: false,
-                              success: function (success) {
-                                  var select = `<div class="layui-form-item"><label class="layui-form-label">${dom.title}</label><div class="layui-input-inline" ><select name="${dom.field}">`;
+                                success: function (success) {
+                                    console.log(success);
+                                    var select = `<div class="layui-form-item"><label class="layui-form-label">${dom.title}</label><div class="layui-input-inline" ><select name="${dom.field}" lay-filter="${dom.field}">`;
                                     $(success).each(function (i, d) {
                                         select += `<option value="${d.id}" name="123">${d.name}</option>`
                                     });
@@ -302,7 +272,6 @@
                                 },
                               dataType: "json"
                             });
-
                         } else if (dom.sex == 'sex') {
                             sr = `<div class="layui-form-item">
                                     <label class="layui-form-label">${dom.title}</label>
@@ -311,7 +280,7 @@
                                       <input type="radio" name="${dom.field}" value="false" title="女" checked>
                                     </div>
                                   </div>`
-                        } else if (dom.dateTime == 'dateTime') {
+                        } else if (dom.dateTime == 'dateTime' && dom.hides != 'true') {
                             sr = `<div class="layui-form-item">
                                             <label class="layui-form-label">${dom.title}</label>
                                             <div class="layui-input-inline">
@@ -335,6 +304,7 @@
                         }
                         domStr += sr
                     });
+
                     return '<from class="layui-form" >' + domStr + `<input namae='Switch' hidden value='${Switch}'><button hidden lay-submit lay-filter="formDemo">立即提交</button></from>`;
                 }
                 //表格数据显示
@@ -348,15 +318,111 @@
                             , cols: [data]
                             , width: 1000
                             , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
-                            , limit: 5 //每页默认显示的数量
+                            , limit: 10 //每页默认显示的数量
                             , even: true
                             , size: 'sm'
                             , toolbar: true
                         });
                     });
+                    $('.Query').html('').append(QueryFind());
+                    form.render();
+                    laydate.render({
+                        elem: '#text'
+                        , trigger: 'click'
+                    });
+                    laydate.render({
+                        elem: '#text1'
+                        , trigger: 'click'
+                    });
                 };
+                function SelectTable(data, condition) {
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        //展示已知数据
+                        table.render({
+                            elem: '#demo'
+                            , url: `/Home/${Switch}`
+                            , cols: [data]
+                            , width: 1000
+                            , page: { layout: ['prev', 'page', 'next', 'count'] } //是否显示分页
+                            , limit: 10 //每页默认显示的数量
+                            , even: true
+                            , size: 'sm'
+                            , toolbar: true
+                            , where: condition
+                        });
+                    });
+                    $('.Query').html('').append(QueryFind());
+                    form.render();
+                    laydate.render({
+                        elem: '#text'
+                        , trigger: 'click'
+                    });
+                    laydate.render({
+                        elem: '#text1'
+                        , trigger: 'click'
+                    });
+                };
+                function QueryFind() {
+                    var Return = "";
+                    $(showrow[Switch]).each(function (number, element) {
+                        var eachReturn = "";
+
+                        if (element.select == 'select') {
+                            $.ajax({
+                                type: "POST",
+                                url: `/Home/Select${element.table}`,
+                                async: false,
+                                success: function (success) {
+                                    var select = `<label class="layui-form-label">${element.title}</label>`
+                                    select += `<div class="layui-input-inline" ><select name="${element.field}">`;
+                                    select += `<option value="0" name="123">全部</option>`
+                                    $(success).each(function (i, d) {
+                                        select += `<option value="${d.id}" name="123">${d.name}</option>`
+                                    });
+                                    eachReturn = select + '</select></div>';
+                                },
+                                dataType: "json"
+                            });
+                        } else if (element.sex == 'sex') {
+                            eachReturn = `
+                                    <label class="layui-form-label">${element.title}</label>
+                                    <div class="layui-input-inline">
+                                      <input type="radio" name="sex" value="" title="全部" checked>
+                                      <input type="radio" name="sex" value="1" title="男">
+                                      <input type="radio" name="sex" value="2" title="女">
+                                    </div>`
+                        } else if (element.dateTime == 'dateTime') {
+                            eachReturn = `<label class="layui-form-label">${element.title}</label>
+                                            <div class="layui-input-inline">
+                                                <input
+                                                type="${element.InputType}"
+                                                name="${element.field}"
+                                                id='text1'
+                                                class="layui-input">
+                                            </div>`
+                        } else if (element.field != undefined && element.hides != 'true') {
+                            var Getmax;
+                            if (element.max != undefined) {
+                                Getmax=``
+                            } else {
+                                Getmax = '';
+                            }
+                            eachReturn += `<label class="layui-form-label">${element.title}</label>`
+                            eachReturn += `<div class="layui-input-inline"><input `
+                            eachReturn += `type = "${element.InputType}" name="${element.field}"`
+                            eachReturn += ` class="layui-input"> </div>`
+                        }
+                        Return += eachReturn
+                    });
+                    Return = `<div class="layui-form-item">` + Return;
+                    Return += `<div class="layui-form-item"><div class="layui-input-block">`;
+                    Return += `<button class="layui-btn" lay-submit lay-filter="QueryDemo">查询</button>`
+                    Return += `<button type="reset" class="layui-btn layui-btn-primary">重置</button>`;
+                    Return += `</div></div></div>`;
+                    return Return;
+                }
             });
         }();
     </script>
-</body>
-</html>
+}

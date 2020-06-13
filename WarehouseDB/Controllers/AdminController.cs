@@ -14,22 +14,23 @@ namespace WarehouseDB.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-
             return View();
         }
         public ActionResult Login(admini ad)
         {
-
-            AdminiBll admini = new AdminiBll();
-            var Flag = admini.AdminiLogin(ad);
-            if (Flag == null)
-                return RedirectToAction("Index");
-            else
+            var text = "";
+            var Flag = new AdminiBll().AdminiLogin(ad, out text);
+            if (Flag != null)
             {
-                HttpContext.Session[ad.adminiName] =1;
-                HttpContext.Session[ad.adminiPassword] =2;
-                return RedirectToRoute(new { controller = "Home", action = "Index" });
+                System.Web.HttpContext.Current.Session.Add("adminName", ad.adminiName);
+                System.Web.HttpContext.Current.Session.Add("adminPassword", ad.adminiPassword);
             }
+            return Json(new
+            {
+                Text = text,
+                Flag = Flag != null
+            }
+            , JsonRequestBehavior.AllowGet);
         }
     }
 }

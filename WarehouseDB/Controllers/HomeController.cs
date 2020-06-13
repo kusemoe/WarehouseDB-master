@@ -2,6 +2,7 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Query.Dynamic;
@@ -12,18 +13,24 @@ namespace WarehouseDB.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var name = System.Web.HttpContext.Current.Session["adminName"];
+            if (name != null)
+                return View();
+            else
+                return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
-        public ActionResult About() => View();
+
         #region 数据查询
-        public ActionResult Type(int page, int limit)
+        public ActionResult Type(int page, int limit, type t)
         {
             var bll = new TypeBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.typeID,
-                i.typeName
-            });
+            var List = bll.SelectList()
+                .Where(i => isTrue(i.typeName, t.typeName))
+                .Select(i => new
+                {
+                    i.typeID,
+                    i.typeName
+                });
             var ListJson = new
             {
                 code = 0,
@@ -33,17 +40,24 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Bill(int page, int limit)
+        public ActionResult Bill(int page, int limit, Bill t)
         {
             var bll = new BillBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.BillId,
-                i.product.ProductName,
-                i.BillNum,
-                i.BillType,
-                BillTime = i.BillTime.ToString(),
-            });
+            var List = bll.SelectList()
+                .Where(i =>
+                    IsTrue(i.ProductId, t.ProductId)
+                    && IsTrue(i.BillNum, t.BillNum)
+                    && isTrue(i.BillType, t.BillType)
+                    && isTrue(i.BillTime.ToString(), t.BillTime)
+                )
+                .Select(i => new
+                {
+                    i.BillId,
+                    ProductId = i.product.ProductName,
+                    i.BillNum,
+                    i.BillType,
+                    BillTime = i.BillTime.ToString(),
+                });
             var ListJson = new
             {
                 code = 0,
@@ -53,18 +67,25 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Order(int page, int limit)
+        public ActionResult Order(int page, int limit, Order t)
         {
             OrderBll bll = new OrderBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.BarCode,
-                i.address,
-                i.OrderId,
-                OrderTime = i.OrderTime.ToString(),
-                i.Remarks
+            var List = bll.SelectList()
+                .Where(i =>
+                    isTrue(i.BarCode, t.BarCode)
+                    && IsTrue(i.OrderTime, t.OrderTime)
+                    && isTrue(i.address, t.address)
+                    && isTrue(i.Remarks, t.Remarks)
+                )
+                .Select(i => new
+                {
+                    i.BarCode,
+                    i.address,
+                    i.OrderId,
+                    OrderTime = i.OrderTime.ToString(),
+                    i.Remarks
 
-            });
+                });
             var ListJson = new
             {
                 code = 0,
@@ -74,17 +95,24 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Staff(int page, int limit)
+        public ActionResult Staff(int page, int limit, staff t, string sex)
         {
             var bll = new staffBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.StaffId,
-                EntryTime = i.EntryTime.ToString(),
-                i.StaffName,
-                StaffSex = i.StaffSex ? "男" : "女",
-                i.department.departmentName
-            });
+            var List = bll.SelectList()
+                .Where(i =>
+                    IsTrue(i.EntryTime, t.EntryTime)
+                    && isTrue(i.StaffName, t.StaffName)
+                    && IsTrue(i.departmentType, t.departmentType)
+                    && isTrue(sex, sex)
+                )
+                .Select(i => new
+                {
+                    i.StaffId,
+                    EntryTime = i.EntryTime.ToString(),
+                    i.StaffName,
+                    StaffSex = i.StaffSex ? "男" : "女",
+                    departmentId = i.department.departmentName
+                });
             var ListJson = new
             {
                 code = 0,
@@ -94,10 +122,17 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Client(int page, int limit)
+        public ActionResult Client(int page, int limit, client t)
         {
             var bll = new clientBll();
-            var List = bll.SelectList().Select(i =>
+            var List = bll.SelectList()
+                .Where(i =>
+                    isTrue(i.ClientName, t.ClientName)
+                    && isTrue(i.Emli, t.Emli)
+                    && isTrue(i.Phone, t.Phone)
+                    && isTrue(i.Address, t.Address)
+                )
+                .Select(i =>
             new
             {
                 i.ClientId,
@@ -115,10 +150,14 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Admini(int page, int limit)
+        public ActionResult Admini(int page, int limit, admini t)
         {
             var bll = new AdminiBll();
-            var List = bll.SelectList();
+            var List = bll.SelectList()
+                .Where(i =>
+                    isTrue(i.adminiName, t.adminiName)
+                    && isTrue(i.adminiPassword, t.adminiPassword)
+                );
             var ListJson = new
             {
                 code = 0,
@@ -128,18 +167,25 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Product(int page, int limit)
+        public ActionResult Product(int page, int limit, product t)
         {
             var bll = new ProductBll();
-            var list = bll.SelectProduct().Select(pro => new
-            {
-                pro.Barcode,
-                pro.money,
-                pro.ProductName,
-                pro.ProductId,
-                pro.Remarks,
-                pro.type.typeName
-            });
+            var list = bll.SelectProduct()
+                .Where(i =>
+                    isTrue(i.Barcode, t.Barcode)
+                    && isTrue(i.ProductName, t.ProductName)
+                    && IsTrue(i.money, t.money)
+                    && IsTrue(i.typeId, t.typeId)
+                    && isTrue(i.Remarks, t.Remarks))
+                .Select(pro => new
+                {
+                    pro.Barcode,
+                    pro.money,
+                    pro.ProductName,
+                    pro.ProductId,
+                    pro.Remarks,
+                    typeId = pro.type.typeName
+                });
 
             var ListJson = new
             {
@@ -150,18 +196,20 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Shipping(int page, int limit)
+        public ActionResult Shipping(int page, int limit, Shipping t)
         {
             var bll = new ShippingBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.ShippingId,
-                i.client.ClientName,
-                i.number,
-                status = StateGet(i.status),
-                i.product.ProductName,
-                ShippingTime = i.ShippingTime.ToString()
-            });
+            var List = bll.SelectList()
+                .Where(i => IsTrue(i.number, t.number)
+                    && IsTrue(i.ProductId, t.ProductId)
+                )
+                .Select(i => new
+                {
+                    i.ShippingId,
+                    i.number,
+                    i.ShipperId,
+                    ProductId = i.product.ProductName,
+                });
             var ListJson = new
             {
                 code = 0,
@@ -171,21 +219,30 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Supplier(int page, int limit)
+        public ActionResult Supplier(int page, int limit, supplier t)
         {
             var bll = new supplierBll();
-            var List = bll.SelectList().Select(i =>
-            new
-            {
-                i.supplierId,
-                i.supplierName,
-                i.Address,
-                i.Emli,
-                i.phone,
-                i.principal
-            });
+            var List = bll.SelectList()
+                .Where(i =>
+                    isTrue(i.supplierName, t.supplierName)
+                    && isTrue(i.Address, t.Address)
+                    && isTrue(i.phone, t.phone)
+                    && isTrue(i.principal, t.principal)
+                    && isTrue(i.Emli, t.Emli)
+                )
+                .Select(i =>
+                new
+                {
+                    i.supplierId,
+                    i.supplierName,
+                    i.Address,
+                    i.Emli,
+                    i.phone,
+                    i.principal
+                });
             var ListJson = new
             {
+
                 code = 0,
                 msg = "",
                 count = List.Count(),
@@ -193,10 +250,18 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Purchase(int page, int limit)
+        public ActionResult Purchase(int page, int limit, Purchase t)
         {
             var bll = new PurchaseBll();
-            var List = bll.SelectList().Select(i =>
+            var List = bll.SelectList()
+                .Where(i =>
+                    IsTrue(i.ProductId, t.ProductId)
+                    && IsTrue(i.supplierId, t.supplierId)
+                    && IsTrue(i.number, t.number)
+                    && IsTrue(i.status, t.status)
+                    && IsTrue(i.PurchaseTime, t.PurchaseTime)
+                )
+                .Select(i =>
             new
             {
                 i.PurchaseId,
@@ -215,14 +280,16 @@ namespace WarehouseDB.Controllers
             };
             return Json(ListJson, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Department(int page, int limit)
+        public ActionResult Department(int page, int limit, department t)
         {
             var bll = new departmentBll();
-            var List = bll.SelectList().Select(i => new
-            {
-                i.departmentId,
-                i.departmentName
-            });
+            var List = bll.SelectList()
+                .Where(i => isTrue(i.departmentName, t.departmentName))
+                .Select(i => new
+                {
+                    i.departmentId,
+                    i.departmentName
+                });
             var ListJson = new
             {
                 code = 0,
@@ -297,22 +364,7 @@ namespace WarehouseDB.Controllers
             return Content(error);
         }
         #endregion
-
-
-        public string StateGet(int n)
-        {
-            switch (n)
-            {
-                case 1:
-                    return "待审核";
-                case 2:
-                    return "审核成功";
-                case 3:
-                    return "审核失败";
-            }
-            return null;
-        }
-
+        #region 下拉框查询
         public ActionResult SelectDepartment()
         {
             var list = new departmentBll().SelectList().Select(i => new { id = i.departmentId, name = i.departmentName });
@@ -351,16 +403,27 @@ namespace WarehouseDB.Controllers
             var list = new ProductBll().SelectProduct().Select(i => new { id = i.ProductId, name = i.ProductName });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult SelectDepotNum()
+        {
+            var list = new DepotBll().SelectList().Select(i => new { id = i.ProductId, name = i.product.ProductName });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetSelectDepot(int id)
+        {
+            var MaxNum = new DepotBll().SelectList().Where(i => i.ProductId == id).First().stock;
+            return Content(MaxNum.ToString());
+        }
 
+        #endregion
+        #region 添加数据
 
         public ActionResult AddType(type AddData)
         {
             var Flag = new TypeBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
-        public ActionResult AddBill(Bill AddData, int ProductName)
+        public ActionResult AddBill(Bill AddData)
         {
-            AddData.ProductId = ProductName;
             var Flag = new BillBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
@@ -379,9 +442,8 @@ namespace WarehouseDB.Controllers
             var Flag = new OrderBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
-        public ActionResult AddProduct(product AddData, int typeName)
+        public ActionResult AddProduct(product AddData)
         {
-            AddData.typeId = typeName;
             var Flag = new ProductBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
@@ -397,10 +459,8 @@ namespace WarehouseDB.Controllers
             }
             return Content(Flag.ToString());
         }
-        public ActionResult AddShipping(Shipping AddData, int ClientName, int ProductName)
+        public ActionResult AddShipping(Shipping AddData)
         {
-            AddData.clientId = ClientName;
-            AddData.ProductId = ProductName;
             var Flag = new ShippingBll().Add(AddData) != 0;
             if (Flag)
             {
@@ -429,8 +489,45 @@ namespace WarehouseDB.Controllers
             var Flag = new DepotBll().Add(AddData) != 0;
             return Content(Flag.ToString());
         }
-
+        #endregion
+        #region 数据验证
+        public bool isTrue(string a, string b)
+        {
+            if (string.IsNullOrEmpty(b))
+                return true;
+            return a.IndexOf(b) != -1;
+        }
+        public bool IsTrue(DateTime a, DateTime b)
+        {
+            if (b == null || b.Year == 1)
+                return true;
+            return a.Equals(b);
+        }
+        public bool IsTrue(int a, int b)
+        {
+            if (b == 0)
+                return true;
+            return a == b;
+        }
+        private bool IsTrue(decimal a, decimal b)
+        {
+            if (b == 0)
+                return true;
+            return a == b;
+        }
+        #endregion
+        public string StateGet(int n)
+        {
+            switch (n)
+            {
+                case 1:
+                    return "待审核";
+                case 2:
+                    return "审核成功";
+                case 3:
+                    return "审核失败";
+            }
+            return null;
+        }
     }
-
-
 }
